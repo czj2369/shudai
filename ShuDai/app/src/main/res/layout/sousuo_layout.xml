@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.anjian.shudai.SousuoActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="160dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/main_picture2"
+            android:id="@+id/imageView" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="聊天"
+            android:ems="10"
+            android:id="@+id/textContent"
+            android:hint="请输入小说名" />
+
+        <Button
+            android:text="搜索小说"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/goSearch"
+            android:layout_below="@+id/textContent" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RadioGroup
+            android:id="@+id/rg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/yuan1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="搜索源1"/>
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/yuan2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="搜索源2"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <!--<Button-->
+        <!--android:text="书架"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/goSearch"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:id="@+id/bookshelf_button" />-->
+
+
+</LinearLayout>
