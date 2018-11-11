@@ -35,6 +35,7 @@ public class SousuoActivity extends Fragment {
     private View view;
     private RadioButton yuan1;
     private RadioButton yuan2;
+    private RadioButton yuan3;
     private RadioGroup rg;
 
     public void setSelectWhich(int selectWhich) {
@@ -69,6 +70,7 @@ public class SousuoActivity extends Fragment {
         rg = (RadioGroup)view.findViewById(R.id.rg);
         yuan1 = (RadioButton)view.findViewById(R.id.yuan1);
         yuan2 = (RadioButton)view.findViewById(R.id.yuan2);
+        yuan3 = (RadioButton)view.findViewById(R.id.yuan3);
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -78,6 +80,9 @@ public class SousuoActivity extends Fragment {
                 }else if(yuan2.getId() == checkedId){
                     url = "http://www.99lib.net/book/search.php?s=13139900387823019677&type=站内&q=";
                     setSelectWhich(1);
+                }else if(yuan3.getId() == checkedId){
+                    url = "https://www.xbiquge6.com/search.php?keyword=";
+                    setSelectWhich(2);
                 }
             }
         });

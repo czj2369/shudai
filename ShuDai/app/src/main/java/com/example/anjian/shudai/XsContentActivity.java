@@ -153,8 +153,109 @@ public class XsContentActivity extends AppCompatActivity {
             select1();
         }else if(selectWhich == 1){
             select2();
+        }else if(selectWhich == 2){
+            select3();
         }
 
+    }
+
+    private void select3() {
+        Thread sousuoThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    doc = Jsoup.connect(url).get();
+                    Document doc = Jsoup.connect(url).get();
+                    //通过Document的select方法获取属性结点集合
+                    textContent = doc.select("#content");
+                    title = doc.select("#wrapper > div.content_read > div > div.bookname > h1");
+                    Log.d("XsContentActivity",textContent.text());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showContent();
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        sousuoThread.start();
+        //上下章的按钮逻辑 此处存在逻辑错误 比如第一章没有上一章，最后一章没有下一章。2018年9月11日 22:03:46
+        up_button = (Button) findViewById(R.id.up_button);
+        down_button = (Button) findViewById(R.id.down_button);
+
+        up_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (position != 0) {
+                    url = muluHref[position - 1];
+                    position = position - 1;
+                }
+                Thread sousuoThread = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            doc = Jsoup.connect(url).get();
+                            Document doc = Jsoup.connect(url).get();
+                            //通过Document的select方法获取属性结点集合
+                            textContent = doc.select("#content");
+                            title = doc.select("#wrapper > div.content_read > div > div.bookname > h1");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showContent();
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                sousuoThread.start();
+                content = (TextView) findViewById(R.id.xsContent);
+                String html = textContent.html();//将爬取的数据中html的标签保存下来
+                content.setText(Html.fromHtml(html));
+            }
+        });
+
+        down_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                url = muluHref[position + 1];
+                if (position != muluHref.length) {
+                    position++;
+                } else {
+                    content = (TextView) findViewById(R.id.xsContent);
+                    content.setText("无更多章节");
+                }
+                Thread sousuoThread = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            doc = Jsoup.connect(url).get();
+                            Document doc = Jsoup.connect(url).get();
+                            //通过Document的select方法获取属性结点集合
+                            textContent = doc.select("#content");
+                            title = doc.select("#wrapper > div.content_read > div > div.bookname > h1");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showContent();
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                sousuoThread.start();
+//                content = (TextView) findViewById(R.id.xsContent);
+//                String html = textContent.html();//将爬取的数据中html的标签保存下来
+//                content.setText(Html.fromHtml(html));
+            }
+        });
     }
 
     private void select2() {

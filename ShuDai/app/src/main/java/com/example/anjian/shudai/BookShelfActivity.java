@@ -52,6 +52,7 @@ public class BookShelfActivity extends Fragment {
                 bookhrefList[sum] = cursor.getString(cursor.getColumnIndex("bookhref"));
                 bookauthorList[sum] = cursor.getString(cursor.getColumnIndex("bookauthor"));
                 bookimgList[sum] = cursor.getString(cursor.getColumnIndex("bookimg"));
+                selectWhich = cursor.getInt(cursor.getColumnIndex("selectwhich"));
                 Log.d("BookShelfActivity","bookname:"+booknameList[sum]);
                 Log.d("BookShelfActivity","bookhref:"+bookhrefList[sum]);
                 Log.d("BookShelfActivity","bookhref:"+bookauthorList[sum]);

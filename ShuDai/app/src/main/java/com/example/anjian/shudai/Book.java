@@ -12,7 +12,15 @@ public class Book {
     private String imagehref;
     private Activity activity;
     private String bookContinue;
+    private int select;
 
+    public void setSelect(int select) {
+        this.select = select;
+    }
+
+    public int getSelect() {
+        return select;
+    }
 
     public void setBookContinue(String bookContinue) {
         this.bookContinue = bookContinue;

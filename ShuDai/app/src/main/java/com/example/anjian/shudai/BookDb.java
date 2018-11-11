@@ -16,7 +16,8 @@ public class BookDb extends SQLiteOpenHelper{
             "bookauthor text," +
             "bookimg text," +
             "bookcontinue text," +
-            "position integer)";
+            "position integer," +
+            "selectwhich integer)";
 
     private Context mContext;
 

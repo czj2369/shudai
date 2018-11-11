@@ -60,6 +60,8 @@ public class DetailActivity extends AppCompatActivity {
             selectWhich0();
         }else if(selectWhich == 1){
             selectWhich1();
+        }else if(selectWhich == 2) {
+            selectWhich2();
         }
         addShelf.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +70,7 @@ public class DetailActivity extends AppCompatActivity {
                 values.put("bookhref", url);
                 values.put("bookauthor",bookAuthor);
                 values.put("bookimg",bookImg);
+                values.put("selectwhich",selectWhich);
                 db.insert("book", null, values);
                 values.clear();
                 Toast.makeText(DetailActivity.this,"添加成功",Toast.LENGTH_SHORT).show();
@@ -83,6 +86,34 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(startRead);
             }
         });
+    }
+
+    private void selectWhich2() {
+        Thread sousuoThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    doc = Jsoup.connect(url).get();
+                    detailList = doc.select("#intro > p:nth-child(1)");
+                    detail_content = new String[detailList.size()];
+                    for (int i = 0; i < detailList.size(); i++) {
+                        detail_content[i] = detailList.get(i).text();
+                        Log.d("DetailActivity","detail_content:"+detail_content[i]);
+                        //System.out.println(muluNum[i] + "    "+muluhref[i]);
+                    }
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showContent();
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        sousuoThread.start();
     }
 
     private void selectWhich1() {

@@ -54,7 +54,7 @@ public class MainMuluActivity extends AppCompatActivity {
         continue_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cursor cursor = db.query("book",null,null,null,null,null,null);
+                Cursor cursor = db.query("book",null,"bookname=?",new String[] {bookName},null,null,null);
                 if(cursor.moveToFirst()) {
                     url = cursor.getString(cursor.getColumnIndex("bookcontinue"));
                     position = cursor.getInt(cursor.getColumnIndex("position"));
@@ -70,63 +70,104 @@ public class MainMuluActivity extends AppCompatActivity {
             }
         });
         if(selectWhich == 0) {
-            Thread sousuoThread = new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        doc = Jsoup.connect(url).get();
-                        muluList = doc.select("div#list dl dd");
-                        hrefList = doc.select("div#list dl dd a");
-                        muluNum = new String[muluList.size()];
-                        muluhref = new String[hrefList.size()];
-                        for (int i = 0; i < muluList.size(); i++) {
-                            muluNum[i] = muluList.get(i).text();
-                            muluhref[i] = url + hrefList.get(i).attr("href");
-                            //System.out.println(muluNum[i] + "    "+muluhref[i]);
-                        }
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                setListAdapter();
-                            }
-                        });
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
-            sousuoThread.start();
+            select0();
         }else if(selectWhich == 1){
-            Thread sousuoThread = new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        doc = Jsoup.connect(url).get();
-                        muluList = doc.select("dl#dir dd a");
-                        hrefList = doc.select("dl#dir dd a");
-                        muluNum = new String[muluList.size()];
-                        muluhref = new String[hrefList.size()];
-                        for (int i = 0; i < muluList.size(); i++) {
-                            muluNum[i] = muluList.get(i).text();
-                            muluhref[i] = "http://www.99lib.net" + hrefList.get(i).attr("href");
-                            //System.out.println(muluNum[i] + "  http://www.99lib.net" + muluhref[i]);
-                        }
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                setListAdapter();
-                            }
-                        });
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
-            sousuoThread.start();
+            select1();
+        }else if(selectWhich == 2){
+            select2();
         }
         Toast.makeText(MainMuluActivity.this,"加载目录完成",Toast.LENGTH_SHORT).show();
     }
+
+    private void select2() {
+        Thread sousuoThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    doc = Jsoup.connect(url).get();
+                    muluList = doc.select("#list > dl > dd > a");
+                    hrefList = doc.select("#list > dl > dd > a");
+                    muluNum = new String[muluList.size()];
+                    muluhref = new String[hrefList.size()];
+                    for (int i = 0; i < muluList.size(); i++) {
+                        muluNum[i] = muluList.get(i).text();
+                        muluhref[i] = "https://www.xbiquge6.com" + hrefList.get(i).attr("href");
+                        Log.d("MainMuluActivity","muluhref:"+muluhref[i]);
+                        //System.out.println(muluNum[i] + "  http://www.99lib.net" + muluhref[i]);
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            setListAdapter();
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        sousuoThread.start();
+    }
+
+    private void select1() {
+        Thread sousuoThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    doc = Jsoup.connect(url).get();
+                    muluList = doc.select("dl#dir dd a");
+                    hrefList = doc.select("dl#dir dd a");
+                    muluNum = new String[muluList.size()];
+                    muluhref = new String[hrefList.size()];
+                    for (int i = 0; i < muluList.size(); i++) {
+                        muluNum[i] = muluList.get(i).text();
+                        muluhref[i] = "http://www.99lib.net" + hrefList.get(i).attr("href");
+                        //System.out.println(muluNum[i] + "  http://www.99lib.net" + muluhref[i]);
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            setListAdapter();
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        sousuoThread.start();
+    }
+
+    private void select0() {
+        Thread sousuoThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    doc = Jsoup.connect(url).get();
+                    muluList = doc.select("div#list dl dd");
+                    hrefList = doc.select("div#list dl dd a");
+                    muluNum = new String[muluList.size()];
+                    muluhref = new String[hrefList.size()];
+                    for (int i = 0; i < muluList.size(); i++) {
+                        muluNum[i] = muluList.get(i).text();
+                        muluhref[i] = url + hrefList.get(i).attr("href");
+                        //System.out.println(muluNum[i] + "    "+muluhref[i]);
+                    }
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            setListAdapter();
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        sousuoThread.start();
+    }
+
     private void setListAdapter() {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, muluNum);
         ListView view = (ListView) findViewById(R.id.mulu2_listview);

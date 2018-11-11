@@ -56,13 +56,60 @@ public class MuluActivity extends AppCompatActivity {
         selectWhich = intent.getIntExtra("selectWhich", 0);
         Log.d("MuluActivity","select:"+selectWhich);
         url = intent.getStringExtra("url") + sousuoName;
+        Log.d("MuluActivity",url);
         if (selectWhich == 0) {
             Search1();
         }else if(selectWhich == 1){
             Search2();
+        }else if(selectWhich == 2){
+            Search3();
         }
     }
 
+    private void Search3() {
+        Thread sousuoThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    //爬取查询的结果
+                    doc = Jsoup.connect(url).get();
+                    Log.d("MuluActivity",doc.text());
+                    //书名列表
+                    booknameList = doc.select("div.result-game-item-detail > h3 > a");
+                    System.out.print(booknameList);
+                    //对应作者列表
+                    authorList = doc.select("div.result-game-item-detail > div > p:nth-child(1) > span:nth-child(2)");
+                    //对应小说图片
+                    imgList = doc.select("div.result-game-item-pic > a > img");
+
+                    bookName = new String[booknameList.size()];
+                    bookHref = new String[booknameList.size()];
+                    author = new String[authorList.size()];
+                    bookImg = new String[booknameList.size()];
+
+                    //用一个循环把书名按顺序放进
+                    for (int i = 0; i < booknameList.size(); i++) {
+                        bookName[i] = booknameList.get(i).attr("title");
+                        bookHref[i] = booknameList.get(i).attr("href");
+                        author[i] = authorList.get(i).text();
+                        bookImg[i] = imgList.get(i).attr("src");
+                        //list.add(bookName[i]);
+                        System.out.println(bookName[i] + "   " + author[i] + "    " + bookHref[i]);
+//                        System.out.println(author[j-4]);
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            setListAdapter();
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        sousuoThread.start();
+    }
 
 
     private void Search1() {
