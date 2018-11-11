@@ -1,4 +1,6 @@
 # shudai
+<p>修复
+ </p>
 JAVA语言编写的一个简单的看书APP，包括查找书籍，加入书架，删除书架，继续上次阅读等功能。
 <p>搜索界面</p>
 <img src="https://github.com/czj2369/shudai/blob/master/Screenshot_1541600521.png" width="30%"></img>
