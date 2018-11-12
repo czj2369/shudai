@@ -122,7 +122,7 @@ public class DetailActivity extends AppCompatActivity {
             public void run() {
                 try {
                     doc = Jsoup.connect(url).get();
-                    detailList = doc.select("#intro > p");
+                    detailList = doc.select("#book_info > div.intro");
                     detail_content = new String[detailList.size()];
                     for (int i = 0; i < detailList.size(); i++) {
                         detail_content[i] = detailList.get(i).text();

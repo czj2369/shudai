@@ -58,6 +58,7 @@ public class MainMuluActivity extends AppCompatActivity {
                 if(cursor.moveToFirst()) {
                     url = cursor.getString(cursor.getColumnIndex("bookcontinue"));
                     position = cursor.getInt(cursor.getColumnIndex("position"));
+                    selectWhich = cursor.getInt(cursor.getColumnIndex("selectwhich"));
                 }
                 Log.d("MainMuluActivity",url+"      "+position);
                 Intent intentContent = new Intent(MainMuluActivity.this,XsContentActivity.class);

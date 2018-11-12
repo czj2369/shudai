@@ -132,6 +132,7 @@ public class XsContentActivity extends AppCompatActivity {
         db = db_book.getWritableDatabase();
         values.put("bookcontinue",url);
         values.put("position",position);
+        values.put("selectwhich",selectWhich);
         db.update("book",values,"bookname = ?",new String[] {bookName});
     }
 
@@ -223,9 +224,9 @@ public class XsContentActivity extends AppCompatActivity {
         down_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                url = muluHref[position + 1];
-                if (position != muluHref.length) {
+                if (position != muluHref.length-1) {
                     position++;
+                    url = muluHref[position];
                 } else {
                     content = (TextView) findViewById(R.id.xsContent);
                     content.setText("无更多章节");
@@ -267,7 +268,7 @@ public class XsContentActivity extends AppCompatActivity {
                     Document doc = Jsoup.connect(url).get();
                     //通过Document的select方法获取属性结点集合
                     textContent = doc.select("#content");
-
+                    title = doc.select("#content > h2");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -299,7 +300,7 @@ public class XsContentActivity extends AppCompatActivity {
                             Document doc = Jsoup.connect(url).get();
                             //通过Document的select方法获取属性结点集合
                             textContent = doc.select("#content");
-
+                            title = doc.select("#content > h2");
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -321,9 +322,10 @@ public class XsContentActivity extends AppCompatActivity {
         down_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                url = muluHref[position + 1];
-                if (position != muluHref.length) {
+//                url = muluHref[position + 1];
+                if (position != muluHref.length-1) {
                     position++;
+                    url = muluHref[position];
                 } else {
                     content = (TextView) findViewById(R.id.xsContent);
                     content.setText("无更多章节");
@@ -336,7 +338,7 @@ public class XsContentActivity extends AppCompatActivity {
                             Document doc = Jsoup.connect(url).get();
                             //通过Document的select方法获取属性结点集合
                             textContent = doc.select("#content");
-
+                            title = doc.select("#content > h2");
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

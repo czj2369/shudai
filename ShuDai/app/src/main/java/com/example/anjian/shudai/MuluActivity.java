@@ -182,9 +182,10 @@ public class MuluActivity extends AppCompatActivity {
                         bookName[i] = booknameList.get(i).attr("title");
                         bookHref[i] = "http://www.99lib.net" + booknameList.get(i).attr("href");
                         author[i] = authorList.get(i).text();
+                        bookImg[i] = imgList.get(i).attr("src");
                         // bookImg[i] = imgList.get(i).attr("src");
                         //list.add(bookName[i]);
-                        System.out.println(bookName[i] + "   " + author[i] + "    " + bookHref[i]);
+                        System.out.println(bookName[i] + "   " + author[i] + "    " + bookHref[i]+"   "+bookImg[i]);
                     }
                     if(pageNum < 15) {
                         runOnUiThread(new Runnable() {

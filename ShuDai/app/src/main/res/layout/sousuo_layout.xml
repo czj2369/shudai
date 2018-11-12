@@ -27,7 +27,7 @@
             android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="聊天"
+            android:text="明朝那些事"
             android:ems="10"
             android:id="@+id/textContent"
             android:hint="请输入小说名" />
